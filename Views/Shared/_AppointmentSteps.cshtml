@@ -1,0 +1,106 @@
+﻿@model Appointment
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!-- Button trigger modal -->
+
+
+@* Appointment form -- slide one *@
+<form  method="POST" asp-action="Create" asp-controller="Appointment" id="Submission_form">
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @* Modal header *@
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Book an appointemnt now!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @* Modal header end *@
+
+            @* Modal Body *@
+            <div class="modal-body">
+                @* Modal Tabs *@
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Reservation Type</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" disabled id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
+                    </li>
+                </ul>
+                @* Modal Tabs end *@
+
+                @* Tabs body *@
+                <div class="tab-content" id="pills-tabContent">
+                        @* Reservation type tab content *@
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <h4> Select your reservation type </h4>
+                           <div>
+                                <div class="form-check">
+                                    <input checked="false" class=" form-check-input" type="radio" asp-for="ReservationType" value="@ReservationType.Normal" id="Select_Normal">
+                                    <label class="form-check-label" for="Select_Normal">
+                                        @ReservationType.Normal
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input checked="false" class=" form-check-input" type="radio" asp-for="ReservationType" value="@ReservationType.VIP" id="Select_VIP">
+                                    <label class="form-check-label" for="Select_VIP">
+                                        @ReservationType.VIP
+                                    </label>
+                                </div>
+                           </div>
+                            
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="button" id="step_one">Next</button>
+                            </div>
+                    </div>
+                        @* Reservation type tab content end *@
+
+                        @* Profile tab content *@
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="row mb-3">
+                                <div class="form-group col-6">
+                                    <label asp-for="FullName"></label>
+                                    <input asp-for="FullName" class="form-control" />
+                                    <span class="text-danger" asp-validation-for="FullName"></span>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="Mail"></label>
+                                    <input asp-for="Mail" class="form-control" />
+                                    <span class="text-danger" asp-validation-for="Mail"></span>
+                                </div>
+                        </div>
+                            <div class="row mb-3">
+                                <div class="form-group col-6">
+                                    <label asp-for="Phone" class="d-block"></label>
+                                    <input id="phone" asp-for="Phone" class="form-control intl-tel-input" type="tel" />
+                                    <span class="text-danger" asp-validation-for="Phone" id="Phone_Error_Msg"></span>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="Nationality">Select Nationality</label>
+                                    @Html.DropDownList("Nationality", ViewBag.Nationalities as SelectList, new { @class = "form-control" })
+                                    <span class="text-danger" asp-validation-for="Nationality"></span>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                    </div>
+                    @* Profile tab content end *@
+
+                </div>
+                @* Tabs end *@
+            </div>
+            @* Modal end *@
+
+
+            @* <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+</form>

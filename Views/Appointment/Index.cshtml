@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Appointment_form.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Appointments</h1>
+@* // A button to trigger the modal with a form to create a new appointment*@
+ <div class="d-flex justify-content-end">
+<p class="float-right">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Book an appointment
+        </button>
+</p>
+</div>
+@* Representig all the appointments *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nationality)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nationality)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+              <td>
+                    @Html.DisplayFor(modelItem => item.ReservationType)
+             </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@* end of the all appointments' table *@
+<partial name="_AppointmentSteps" model="new Appointment()" />
+
+   @section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+        <script>
+       
+        $(document).ready(function () {
+            // Making the tabs' buttons desialbed
+            $('input[name="ReservationType"]').prop('checked', false);
+            $('#phone').intlTelInput({
+                initialCountry: 'auto',
+                separateDialCode: true,
+                nationalMode: false
+            });
+
+            // Appending the country code to the phone and validating the  country code
+            $("#Submission_form").submit(function () {
+                    // Get the selected country data
+                    var countryData = $("#phone").intlTelInput("getSelectedCountryData");
+
+                    // Access the country code (dial code)
+                    var countryCode = countryData.dialCode;
+                    var errorMsg = $('#Phone_Error_Msg');
+                    // Get the full phone number including the country code
+                    //Checking if the country code is empty
+                    if (typeof countryCode == "undefined") {
+                        errorMsg.text('Please enter a country code');
+                        return false;
+                    } else if (errorMsg.text() == '') {
+                        var FullPhone = '+' + countryCode + $('#phone').val();
+                        var stringPhoneLen = FullPhone.toString().length;
+                        if (stringPhoneLen >= 8 && stringPhoneLen <= 14) {
+                            errorMsg.text('');
+                            $('#phone').val(FullPhone);
+                        } else {
+                            errorMsg.text('Please enter a valid mobile number');
+                            return false;
+                        }
+                    }
+                });
+                
+
+            $('#step_one').click(function () {
+                var reservationType = $('input[name="ReservationType"]:checked').val();
+                if (reservationType) {
+                    $('#pills-profile-tab').prop('disabled', false)
+                    $('#pills-profile-tab').trigger('click')
+                }
+
+            })
+        });
+        // Removing the default checket button in the radio input and setting the next button
+        
+        
+    </script>
+   }

@@ -1,0 +1,23 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/*Adjusting thead width color-profile thead countries code drop down list*/
+.iti.iti--allow-dropdown.iti--separate-dial-code.iti--show-flags {
+    width: 100% !important;
+}
+
